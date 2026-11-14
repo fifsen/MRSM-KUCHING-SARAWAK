@@ -1,0 +1,8 @@
+{
+  "name": "Mission Architect",
+  "description": "Design, launch, and fly a robotic space mission in an interactive blueprint engineering simulator.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

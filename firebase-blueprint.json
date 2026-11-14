@@ -1,0 +1,78 @@
+{
+  "entities": {
+    "ArchitectProfile": {
+      "title": "ArchitectProfile",
+      "description": "Authenticated Mission Architect user profile stored privately under the user's own document.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "Firebase Auth UID of the owner.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "User display name.",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "photoURL": {
+          "type": "string",
+          "description": "Optional profile avatar URL.",
+          "maxLength": 500
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server creation timestamp."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server update timestamp."
+        }
+      },
+      "required": ["uid", "displayName", "createdAt", "updatedAt"]
+    },
+    "ArchitectProgress": {
+      "title": "ArchitectProgress",
+      "description": "User's cloud-synced mission best scores and latest spacecraft draft.",
+      "type": "object",
+      "properties": {
+        "ownerId": {
+          "type": "string",
+          "description": "Firebase Auth UID of the owner.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "bestScores": {
+          "type": "object",
+          "description": "Best score and grade keyed by target mission id."
+        },
+        "draft": {
+          "type": "object",
+          "description": "Latest saved spacecraft draft configuration and step."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server update timestamp."
+        }
+      },
+      "required": ["ownerId", "bestScores", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/ArchitectProfile" },
+      "description": "Owner-only profile document for an authenticated Mission Architect user."
+    },
+    "/users/{userId}/progress/{progressId}": {
+      "schema": { "$ref": "#/entities/ArchitectProgress" },
+      "description": "Owner-only cloud progress document storing bestScores and saved draft."
+    }
+  }
+}
